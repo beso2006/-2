@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 مختبر التفكير النقدي - الفصل الثاني</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;900&display=swap');
+
+  :root {
+    --sky: #00C6FB;
+    --sky-dark: #005BEA;
+    --lemon: #F9F871;
+    --pink: #FF6EE2;
+    --pink-dark: #C2185B;
+    --gold: #FFD700;
+    --gold-dark: #B8860B;
+    --gold-glow: rgba(255,215,0,0.6);
+    --mint: #00E5A0;
+    --coral: #FF6B6B;
+    --purple: #A855F7;
+    --bg: #0A0E1A;
+    --card: #141828;
+    --card2: #1A1F35;
+    --text: #F0F4FF;
+    --text-muted: #8892B0;
+    --radius: 24px;
+    --radius-sm: 14px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(0,198,251,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(255,110,226,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+
+  /* ===== HEADER ===== */
+  .hero {
+    text-align: center;
+    padding: 48px 16px 32px;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--sky), var(--purple));
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 20px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--sky) 0%, var(--pink) 50%, var(--lemon) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--text-muted);
+    font-size: clamp(14px, 3vw, 17px);
+    max-width: 600px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .stat-chip {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--sky);
+    font-weight: 700;
+  }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 28px 0 36px;
+    padding: 0 8px;
+  }
+  .tab-btn {
+    background: var(--card);
+    border: 2px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Cairo', sans-serif;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--sky); color: var(--sky); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--sky-dark), var(--purple));
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,198,251,0.3);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ===== GOLD FRAME ===== */
+  .gold-frame {
+    background: linear-gradient(145deg, #1a1400, #0d0800);
+    border: 3px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 28px;
+    position: relative;
+    box-shadow: 
+      0 0 20px var(--gold-glow),
+      0 0 60px rgba(255,215,0,0.2),
+      inset 0 0 30px rgba(255,215,0,0.05);
+  }
+  .gold-frame::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: calc(var(--radius) + 3px);
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #B8860B, #FFD700);
+    background-size: 300% 300%;
+    animation: goldShimmer 3s ease infinite;
+    z-index: -1;
+  }
+  @keyframes goldShimmer {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .gold-frame-title {
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 900;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px var(--gold-glow);
+    line-height: 1.4;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-body { color: #CBD5E1; line-height: 1.8; font-size: 15px; }
+  .card-body p { margin-bottom: 8px; }
+
+  /* ===== ACCORDION ===== */
+  .accordion-item {
+    background: var(--card2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    transition: background 0.2s;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .accordion-header:hover { background: rgba(255,255,255,0.04); }
+  .accordion-header .emoji { font-size: 22px; flex-shrink: 0; }
+  .accordion-header .arrow { transition: transform 0.3s; font-size: 12px; flex-shrink: 0; }
+  .accordion-header.open .arrow { transform: rotate(180deg); }
+  .accordion-body {
+    display: none;
+    padding: 0 20px 20px;
+    color: #CBD5E1;
+    line-height: 1.9;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .accordion-body.open { display: block; animation: fadeIn 0.3s ease; }
+  .accordion-body ul { padding-right: 20px; }
+  .accordion-body li { margin-bottom: 8px; }
+
+  /* ===== COLORED TAGS ===== */
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 2px;
+  }
+  .tag-sky { background: rgba(0,198,251,0.15); color: var(--sky); border: 1px solid rgba(0,198,251,0.3); }
+  .tag-pink { background: rgba(255,110,226,0.15); color: var(--pink); border: 1px solid rgba(255,110,226,0.3); }
+  .tag-gold { background: rgba(255,215,0,0.15); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+  .tag-mint { background: rgba(0,229,160,0.15); color: var(--mint); border: 1px solid rgba(0,229,160,0.3); }
+  .tag-coral { background: rgba(255,107,107,0.15); color: var(--coral); border: 1px solid rgba(255,107,107,0.3); }
+  .tag-purple { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+
+  /* ===== GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width: 700px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ===== PROPERTY CARD ===== */
+  .prop-card {
+    background: var(--card2);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .prop-num {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--sky), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .prop-title { font-size: 14px; font-weight: 800; color: white; }
+  .prop-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ===== ERROR CARD / TYPE ===== */
+  .error-card {
+    background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(255,107,107,0.05));
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .error-num { color: var(--coral); font-weight: 900; font-size: 20px; }
+  .error-title { color: white; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .error-desc { color: #CBD5E1; font-size: 13px; line-height: 1.7; }
+
+  /* ===== QUESTIONS ===== */
+  .q-section-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: white;
+    margin: 32px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .q-section-badge {
+    background: linear-gradient(135deg, var(--sky), var(--purple));
+    color: white;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-weight: 700;
+  }
+
+  .question-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    color: white;
+  }
+  .reveal-btn {
+    background: linear-gradient(135deg, var(--pink-dark), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reveal-btn:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(194,24,91,0.4); }
+  .reveal-btn:active { transform: scale(0.98); }
+
+  .answer-box {
+    display: none;
+    margin-top: 12px;
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.show { display: block; }
+  @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+  .answer-box.correct { background: rgba(0,229,160,0.12); border: 1px solid rgba(0,229,160,0.3); }
+  .answer-box.incorrect { background: rgba(255,107,107,0.12); border: 1px solid rgba(255,107,107,0.3); }
+  .answer-label { font-weight: 900; font-size: 15px; margin-bottom: 4px; }
+  .answer-label.c { color: var(--mint); }
+  .answer-label.x { color: var(--coral); }
+  .answer-explain { color: #CBD5E1; font-size: 13px; }
+
+  /* MCQ Options */
+  .mcq-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .mcq-opt {
+    background: var(--card2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Cairo', sans-serif;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mcq-opt:hover { border-color: var(--sky); color: white; background: rgba(0,198,251,0.08); }
+  .mcq-opt .opt-letter {
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .mcq-opt.selected-correct { background: rgba(0,229,160,0.15); border-color: var(--mint); color: white; }
+  .mcq-opt.selected-wrong { background: rgba(255,107,107,0.15); border-color: var(--coral); color: white; }
+  .mcq-opt.show-correct { background: rgba(0,229,160,0.15); border-color: var(--mint); }
+
+  /* Progress */
+  .progress-bar {
+    background: rgba(255,255,255,0.07);
+    border-radius: 50px;
+    height: 6px;
+    margin: 8px 0 20px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--sky), var(--purple));
+    transition: width 0.4s ease;
+  }
+
+  /* Score */
+  .score-display {
+    background: var(--card);
+    border-radius: var(--radius-sm);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .score-num { font-size: 28px; font-weight: 900; color: var(--mint); }
+  .score-label { font-size: 13px; color: var(--text-muted); }
+
+  /* Separator */
+  .sep { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 28px 0; }
+
+  /* Info row */
+  .info-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; align-items: flex-start; }
+  .info-icon { font-size: 20px; flex-shrink: 0; }
+  .info-text { color: #CBD5E1; font-size: 14px; line-height: 1.7; flex: 1; }
+
+  /* Highlight box */
+  .highlight {
+    background: rgba(0,198,251,0.08);
+    border-right: 3px solid var(--sky);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #CBD5E1;
+    line-height: 1.7;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">📚 الفصل الثاني · التفكير النقدي بين صور التفكير</div>
+    <h1>🧠 مختبر التفكير النقدي</h1>
+    <p>المرجع الأكاديمي الشامل والتفاعلي لمادة التفكير النقدي — أسسه وتنمية مهاراته</p>
+    <div class="hero-stats">
+      <div class="stat-chip">⚡ 12 خاصية للتفكير</div>
+      <div class="stat-chip">🎯 5 أنواع تفكير عليا</div>
+      <div class="stat-chip">📝 80 سؤال تفاعلي</div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showSection('content')">📖 المحتوى العلمي</button>
+    <button class="tab-btn" onclick="showSection('tf')">✅ صح أو خطأ (50)</button>
+    <button class="tab-btn" onclick="showSection('mcq')">🎯 اختيار من متعدد (30)</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: CONTENT -->
+  <!-- ============================================================ -->
+  <div id="content" class="section active">
+
+    <!-- GOLD FRAME: ما المقصود بالتفكير -->
+    <div class="gold-frame">
+      <div class="gold-frame-title">⚠️ تنبيه الفاينل: أهم جزئية في الامتحان المكتوب!</div>
+
+      <!-- المقصود بالتفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🔬</span> أولاً: المقصود بالتفكير</div>
+        <div class="card-body">
+          <div class="highlight">التفكير <strong>عملية داخلية</strong> لا يمكن ملاحظتها بشكل مباشر، بل يُستدل عليها من خلال المظاهر السلوكية القابلة للملاحظة أو القياس، وهو ما يجعل تحديده تحديداً دقيقاً أمراً صعباً.</div>
+          <div class="highlight">يُنظر إلى التفكير على أنه <strong>وظيفة عقلية معرفية</strong> تتم في أرفع المستويات العقلية، وتنشأ عنه <strong>معرفة منسقة منتظمة</strong>.</div>
+        </div>
+      </div>
+
+      <!-- تعريفات التفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>📌</span> تعريفات التفكير: المحاور الجوهرية</div>
+        <div class="card-body">
+          <p style="margin-bottom:12px; font-size:14px; color:#94A3B8;">تدور أغلب تعريفات التفكير حول المحاور الستة التالية:</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-row"><div class="info-icon">①</div><div class="info-text"><strong>التفكير فعل عقلي واعٍ وراقٍ</strong> — لا يحدث بصورة آلية عشوائية.</div></div>
+            <div class="info-row"><div class="info-icon">②</div><div class="info-text"><strong>عملية داخلية غير مرئية (تكوين فرضي)</strong> يُستدل عليها من خصائص الموقف المثير ومن خصائص السلوك النهائي.</div></div>
+            <div class="info-row"><div class="info-icon">③</div><div class="info-text"><strong>لا يبدأ من فراغ</strong> — بل ينطلق دائماً من خلفية معرفية وخبرات سابقة.</div></div>
+            <div class="info-row"><div class="info-icon">④</div><div class="info-text"><strong>هدفه القريب:</strong> حل مشكلات الحاضر. <strong>هدفه البعيد:</strong> تجنب تلك المشكلات مستقبلاً.</div></div>
+            <div class="info-row"><div class="info-icon">⑤</div><div class="info-text"><strong>نشاط إرادي</strong> — يصدر عن إرادة واعية وقصد.</div></div>
+            <div class="info-row"><div class="info-icon">⑥</div><div class="info-text"><strong>أدوات التفكير:</strong> الرموز، المفاهيم، المعاني، الصور العقلية.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- خصائص التفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🌟</span> خصائص التفكير الإنساني الاثنتا عشرة</div>
+        <div class="card-body">
+          <div class="grid-2" style="gap:12px; margin-bottom:4px;">
+            <div class="prop-card">
+              <div class="prop-num">01</div>
+              <div class="prop-title">داخلي وذاتي</div>
+              <div class="prop-desc">يتم داخل العقل بعيداً عن أي ملاحظة مباشرة — الشخص يفكر بشكل أفضل عند عدم انشغاله.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">02</div>
+              <div class="prop-title">معرفي يُستدل عليه</div>
+              <div class="prop-desc">رغم كونه داخلياً، يمكن الاستدلال عليه من السلوك الخارجي (كنقلات لاعب الشطرنج).</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">03</div>
+              <div class="prop-title">تصوري رمزي</div>
+              <div class="prop-desc">يستعيض عن الأشياء والأشخاص والمواقف برموزها بدلاً من معالجتها معالجة فعلية واقعية.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">04</div>
+              <div class="prop-title">موجَّه وهادف</div>
+              <div class="prop-desc">يفضي إلى سلوك ينتج عنه حل مشكلة، أو يتجه نحو الحل — كتوجيه لاعب الشطرنج لكسب المباراة.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">05</div>
+              <div class="prop-title">عملية عقلية عليا</div>
+              <div class="prop-desc">يعتمد على عدة عمليات عقلية أخرى كالتذكر والفهم والإدراك.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">06</div>
+              <div class="prop-title">علائقي</div>
+              <div class="prop-desc">يهتم بالعلاقة بين الموضوعات والأحداث، حتى عندما لا يكون لها وجود مادي في البيئة الخارجية.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">07</div>
+              <div class="prop-title">له محددات موجِّهة</div>
+              <div class="prop-desc">يتحدد في ظل عناصر أساسية هي: الزمن، والموقف، والموضوع.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">08</div>
+              <div class="prop-title">يتأثر بالشخصية</div>
+              <div class="prop-desc">يتأثر بباقي مكونات الشخصية: الدوافع، الانفعالات، الاتجاهات، القيم، الميول، الخبرات.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">09</div>
+              <div class="prop-title">وظيفة تكيّفية</div>
+              <div class="prop-desc">يستعين به الإنسان في عمليات التوافق والتكيف في حياته اليومية.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">10</div>
+              <div class="prop-title">تحرر من الزمان والمكان</div>
+              <div class="prop-desc">يعالج بطريقة رمزية جميع الأشياء البعيدة والغائبة — يتخطى قيود الزمان والمكان.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">11</div>
+              <div class="prop-title">مهارة يمكن تعلمها</div>
+              <div class="prop-desc">التفكير مهارة يمكن تعليمها وتطويرها من خلال التدريب والممارسة.</div>
+            </div>
+            <div class="prop-card">
+              <div class="prop-num">12</div>
+              <div class="prop-title">سلوك ارتقائي</div>
+              <div class="prop-desc">يزداد تعقيداً مع نمو الفرد وارتقائه وتراكم خبراته.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- مستويات التفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🏔️</span> ثانياً: مستويات التفكير</div>
+        <div class="card-body">
+          <div class="grid-2" style="gap:12px; margin-top:8px;">
+            <div style="background:rgba(0,198,251,0.08);border:1px solid rgba(0,198,251,0.3);border-radius:16px;padding:18px;">
+              <div style="color:var(--sky);font-weight:900;font-size:16px;margin-bottom:8px;">① المستوى الأولي</div>
+              <div style="font-weight:700;color:white;margin-bottom:6px;">عمليات التفكير الأساسية</div>
+              <div style="color:#CBD5E1;font-size:13px;line-height:1.7;">الأنشطة العقلية غير المعقدة التي تتطلب مهارات أساسية مثل: <strong>الحفظ، والفهم، والتطبيق.</strong></div>
+            </div>
+            <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.3);border-radius:16px;padding:18px;">
+              <div style="color:var(--purple);font-weight:900;font-size:16px;margin-bottom:8px;">② المستوى الأعلى</div>
+              <div style="font-weight:700;color:white;margin-bottom:6px;">عمليات التفكير العليا</div>
+              <div style="color:#CBD5E1;font-size:13px;line-height:1.7;">تفسير وتحليل المعلومات ومعالجتها <strong>بعيداً عن الحلول البسيطة</strong>، لحل مشكلة لا يمكن حلها بالاستخدام الروتيني للعمليات الدنيا.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- أنواع التفكير العليا -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🌈</span> أنواع التفكير العليا الخمسة</div>
+        <div class="card-body">
+          <div style="color:#94A3B8;font-size:13px;margin-bottom:14px;">ينبثق من التفكير العليا خمسة أنواع رئيسية — اضغط على كل نوع لاستكشاف تفاصيله:</div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span><span class="emoji">🔍</span> التفكير الاستدلالي (الاستنباط / الاستقراء)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <p>النشاط العقلي الذي يستهدف حل المشكلة والوصول إلى نتيجة أو قرار من مقدمات معينة. وينقسم إلى:</p>
+              <ul style="margin-top:10px;">
+                <li><strong>الاستنباط (Deduction):</strong> ما يصدق على الكل يصدق على الجزء — من العام إلى الخاص.</li>
+                <li><strong>الاستقراء (Induction):</strong> نلاحظ الجزئيات بغرض إصدار تعميمات منها محتملة الصدق — من الخاص إلى العام.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span><span class="emoji">⚖️</span> التفكير النقدي (Critical Thinking)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <p>نمط من التفكير يعتمد على <strong>البحث في الأسباب والنتائج</strong>، والتأمل في المعطيات، بهدف الخروج منها برأي أو حكم:</p>
+              <ul style="margin-top:10px;">
+                <li>يؤمن به الفرد ويعتقد في صحته.</li>
+                <li>يتفق مع المسلّمات العلمية وقواعد المنطق.</li>
+                <li>يعتبر <strong>مركباً</strong> (يعتمد على قدرات ومهارات نوعية أبسط).</li>
+                <li>يعتبر <strong>اقترابياً/ذكياً</strong> لأنه يستهدف الوصول إلى حلول صائبة.</li>
+                <li>يعتبر <strong>سوياً وفعالاً</strong> لأنه منطقي ويجنب الأخطاء.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span><span class="emoji">💡</span> التفكير الإبداعي (Creative Thinking)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <p>العملية التي ينتج عنها شيء جديد، ويُحكم على جِدّته من منظور اجتماعي. يتطلب ثلاثة أمور أساسية:</p>
+              <ul style="margin-top:10px;">
+                <li><strong>الحساسية للمشكلات (Sensitivity):</strong> درجة عالية من الإحساس بمشكلات قد لا يشعر بها كثير من الناس العاديين.</li>
+                <li><strong>الطلاقة (Fluency):</strong> درجة عالية من الطلاقة اللفظية والتعبيرية والفكرية.</li>
+                <li><strong>الأصالة (Originality):</strong> القدرة على إنتاج أكبر عدد ممكن من الأفكار الغريبة والجديدة غير المتعارف عليها.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span><span class="emoji">🔄</span> التفكير ما وراء المعرفي (Metacognitive Thinking)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <p>يُطلق عليه <strong>"التفكير في التفكير ذاته"</strong>، بمعنى أن التفكير وخصائصه هو محور اهتمام الشخص. يشمل:</p>
+              <ul style="margin-top:10px;">
+                <li>كيف يفكر الفرد وما مراحل تفكيره.</li>
+                <li>ما استراتيجيات التفكير الفعّالة.</li>
+                <li>يرتبط بالعمليات التنفيذية: <strong>التخطيط، المراقبة، التوجيه، التقييم، الحكم.</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span><span class="emoji">🌊</span> التفكير التأملي (Reflective Thinking)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <p>النشاط العقلي الذي يقوم به الفرد عند مواجهته الموقف المشكل. يستلزم:</p>
+              <ul style="margin-top:10px;">
+                <li>توفر عمليات عقلية تعتمد على القدرة والميل والخبرة.</li>
+                <li>اختيار الخبرات والعادات والمعارف الملائمة للموقف.</li>
+                <li>إعادة تجميع الخبرات في نمط جديد من الاستجابة.</li>
+                <li>يتضمن: <strong>الاتجاه (Direction)، التفسير (Interpretation)، الاختيار (Selection)، الاستبصار (Insight).</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- أساليب التفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🎭</span> أساليب التفكير الأربعة</div>
+        <div class="card-body">
+          <div class="grid-2" style="gap:12px; margin-top:8px;">
+            <div class="accordion-item" style="margin:0;">
+              <div class="accordion-header" onclick="toggleAcc(this)" style="background:rgba(255,107,107,0.08);">
+                <span><span class="emoji">🗿</span> الأسلوب الخرافي</span><span class="arrow">▼</span>
+              </div>
+              <div class="accordion-body">
+                أسلوب المرحلة البدائية. يتسم بالسذاجة وغير المنطقية في تفسير الظواهر. يحيل كل الظواهر إلى غضب الآلهة أو السحر. يدور حول أشياء ليس لها وجود موضوعي — وجودها منحصر في خيال وأوهام الشخص.
+              </div>
+            </div>
+            <div class="accordion-item" style="margin:0;">
+              <div class="accordion-header" onclick="toggleAcc(this)" style="background:rgba(0,229,160,0.08);">
+                <span><span class="emoji">🕌</span> الأسلوب الديني</span><span class="arrow">▼</span>
+              </div>
+              <div class="accordion-body">
+                يربط بين الظواهر التي تمر على الإنسان المؤمن وبين قدرة الله، مما يزيد من إيمانه. تفسير الظواهر الكونية الكبرى يكون أحد أدلة وجود الله ودوافع العمل بإخلاص ابتغاء رضاه.
+              </div>
+            </div>
+            <div class="accordion-item" style="margin:0;">
+              <div class="accordion-header" onclick="toggleAcc(this)" style="background:rgba(168,85,247,0.08);">
+                <span><span class="emoji">🏛️</span> الأسلوب الفلسفي</span><span class="arrow">▼</span>
+              </div>
+              <div class="accordion-body">
+                هدفه الأسمى فهم سر وجود الإنسان ومكانته بطريقة عقلية. يعتمد منهج التأمل العقلي والتحليل المنطقي للربط بين الظواهر الجزئية والمفاهيم الكلية عن الكون والحياة والموت.
+              </div>
+            </div>
+            <div class="accordion-item" style="margin:0;">
+              <div class="accordion-header" onclick="toggleAcc(this)" style="background:rgba(0,198,251,0.08);">
+                <span><span class="emoji">🔬</span> الأسلوب العلمي</span><span class="arrow">▼</span>
+              </div>
+              <div class="accordion-body">
+                يُستخدم في تفسير الظواهر المحددة ومعرفة أسبابها. يستخدمه من تلقوا قدراً من التعليم أو الخبرة يسمح لهم بالوصول إلى استنتاجات مبنية على حقائق علمية.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- تصنيف أنماط التفكير -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>🗂️</span> تصنيف أنماط التفكير</div>
+        <div class="card-body">
+          <p style="margin-bottom:14px;font-size:13px;color:#94A3B8;">ثلاث طرق لتصنيف أنماط التفكير:</p>
+          
+          <div style="background:rgba(0,198,251,0.07);border-radius:14px;padding:16px;margin-bottom:12px;">
+            <div style="color:var(--sky);font-weight:800;margin-bottom:10px;">① التصنيف الرباعي (حسب الارتباط)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-sky">من حيث الحواس: بصري · سمعي · حركي</span>
+              <span class="tag tag-pink">من حيث التعقيد: تحليلي · تركيبي · إبداعي · ناقد</span>
+              <span class="tag tag-gold">من حيث الموضوع: رياضي · فيزيائي · فلسفي · ديني</span>
+              <span class="tag tag-mint">من حيث المنهجية: خرافي · علمي</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(168,85,247,0.07);border-radius:14px;padding:16px;margin-bottom:12px;">
+            <div style="color:var(--purple);font-weight:800;margin-bottom:10px;">② التصنيف الثنائي</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag tag-purple">استدلالي ↔ حدسي</span>
+              <span class="tag tag-purple">واقعي ↔ خيالي</span>
+              <span class="tag tag-purple">تجريدي ↔ عياني</span>
+              <span class="tag tag-purple">تحليلي ↔ تركيبي</span>
+              <span class="tag tag-purple">استنباطي ↔ استقرائي</span>
+              <span class="tag tag-purple">تقاربي ↔ افتراقي</span>
+              <span class="tag tag-purple">بسيط ↔ معقد</span>
+              <span class="tag tag-purple">فعّال ↔ غير فعّال</span>
+              <span class="tag tag-purple">سوي ↔ مرضي</span>
+              <span class="tag tag-purple">علمي ↔ خرافي</span>
+              <span class="tag tag-purple">موجَّه ↔ غير موجَّه</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(255,215,0,0.07);border-radius:14px;padding:16px;">
+            <div style="color:var(--gold);font-weight:800;margin-bottom:10px;">③ التصنيف متعدد الأبعاد</div>
+            <ul style="padding-right:18px;color:#CBD5E1;font-size:13px;line-height:2;">
+              <li><strong>بُعد البساطة مقابل التعقيد</strong></li>
+              <li><strong>بُعد السواء مقابل عدم السواء</strong></li>
+              <li><strong>بُعد تقاربية التفكير (الذكاء) مقابل افتراقيته (الإبداع)</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- خصائص التفكير النقدي -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>✨</span> خصائص التفكير النقدي (مؤشرات فعاليته)</div>
+        <div class="card-body">
+          <div class="grid-2" style="gap:10px;">
+            <div style="background:rgba(0,198,251,0.1);border-radius:12px;padding:12px;border:1px solid rgba(0,198,251,0.2);">
+              <div style="color:var(--sky);font-weight:800;font-size:15px;">العقلانية</div>
+              <div style="color:#CBD5E1;font-size:13px;">يعتمد على العقل لا على الهوى.</div>
+            </div>
+            <div style="background:rgba(0,229,160,0.1);border-radius:12px;padding:12px;border:1px solid rgba(0,229,160,0.2);">
+              <div style="color:var(--mint);font-weight:800;font-size:15px;">المنطقية</div>
+              <div style="color:#CBD5E1;font-size:13px;">يتبع قواعد المنطق في الحكم.</div>
+            </div>
+            <div style="background:rgba(255,215,0,0.1);border-radius:12px;padding:12px;border:1px solid rgba(255,215,0,0.2);">
+              <div style="color:var(--gold);font-weight:800;font-size:15px;">الثبات</div>
+              <div style="color:#CBD5E1;font-size:13px;">لا يتذبذب بحسب الأهواء والمزاج.</div>
+            </div>
+            <div style="background:rgba(168,85,247,0.1);border-radius:12px;padding:12px;border:1px solid rgba(168,85,247,0.2);">
+              <div style="color:var(--purple);font-weight:800;font-size:15px;">العمق</div>
+              <div style="color:#CBD5E1;font-size:13px;">يغوص في جوهر المسائل لا يبقى على السطح.</div>
+            </div>
+            <div style="background:rgba(255,110,226,0.1);border-radius:12px;padding:12px;border:1px solid rgba(255,110,226,0.2);">
+              <div style="color:var(--pink);font-weight:800;font-size:15px;">الموضوعية</div>
+              <div style="color:#CBD5E1;font-size:13px;">يبتعد عن التحيز الشخصي.</div>
+            </div>
+            <div style="background:rgba(255,107,107,0.1);border-radius:12px;padding:12px;border:1px solid rgba(255,107,107,0.2);">
+              <div style="color:var(--coral);font-weight:800;font-size:15px;">الشمول</div>
+              <div style="color:#CBD5E1;font-size:13px;">يأخذ بعين الاعتبار جميع جوانب القضية.</div>
+            </div>
+            <div style="background:rgba(0,198,251,0.1);border-radius:12px;padding:12px;border:1px solid rgba(0,198,251,0.2);">
+              <div style="color:var(--sky);font-weight:800;font-size:15px;">الدقة والوضوح</div>
+              <div style="color:#CBD5E1;font-size:13px;">تحديد دقيق للمفاهيم والأفكار.</div>
+            </div>
+            <div style="background:rgba(0,229,160,0.1);border-radius:12px;padding:12px;border:1px solid rgba(0,229,160,0.2);">
+              <div style="color:var(--mint);font-weight:800;font-size:15px;">القبول والاقتناع</div>
+              <div style="color:#CBD5E1;font-size:13px;">الوصول إلى أحكام يؤمن بها الفرد ويقتنع بصحتها.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- التفكير الفعال وغير الفعال -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title"><span>⚡</span> ثالثاً: التفكير الفعال مقابل التفكير غير الفعال</div>
+        <div class="card-body">
+          <div class="highlight" style="margin-bottom:12px;"><strong>التفكير النقدي يندرج تحت نمط التفكير الفعال</strong> الذي لا يتحقق إلا بشرطين: (1) استخدام أفضل المعلومات دقةً وكفايةً وصلةً بالموضوع، (2) اتباع منهجية علمية سليمة.</div>
+          
+          <div style="color:var(--sky);font-weight:800;margin-bottom:10px;">مهارات التفكير النقدي الفعال (10 مهارات):</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+            <div class="info-row"><div class="info-icon">١</div><div class="info-text">تحديد المشكلة بكل دقة ووضوح.</div></div>
+            <div class="info-row"><div class="info-icon">٢</div><div class="info-text">استخدام مصادر موثوقة من البيانات والمعلومات.</div></div>
+            <div class="info-row"><div class="info-icon">٣</div><div class="info-text">البحث عن بدائل وفحصها باهتمام بالغ.</div></div>
+            <div class="info-row"><div class="info-icon">٤</div><div class="info-text">البحث عن الأسباب ذات العلاقة وعرضها للمناقشة.</div></div>
+            <div class="info-row"><div class="info-icon">٥</div><div class="info-text">الانفتاح على الأفكار والآراء الجديدة.</div></div>
+            <div class="info-row"><div class="info-icon">٦</div><div class="info-text">إصدار الأحكام المناسبة واتخاذ القرارات في ضوء الأهداف الموضوعة — لا في ضوء الرغبات أو العواطف.</div></div>
+            <div class="info-row"><div class="info-icon">٧</div><div class="info-text">الالتزام بالموضوعية منهجاً للبحث والنقاش.</div></div>
+            <div class="info-row"><div class="info-icon">٨</div><div class="info-text">المثابرة عند حل المشكلات وإثارة التفكير باستمرار.</div></div>
+            <div class="info-row"><div class="info-icon">٩</div><div class="info-text">التشكيك في الأمور والمعلومات بغية الوصول إلى أفضلها.</div></div>
+            <div class="info-row"><div class="info-icon">١٠</div><div class="info-text">تأجيل إصدار القرارات عند الافتقار إلى الأدلة الكافية.</div></div>
+          </div>
+
+          <hr class="sep">
+          
+          <div style="color:var(--coral);font-weight:800;font-size:16px;margin-bottom:12px;">🚫 التفكير غير الفعال: التعريف والخصائص</div>
+          <div class="highlight" style="border-color:var(--coral);">هو التفكير الذي لا يتبع منهجية واضحة أو دقيقة، ويقوم على مغالطات أو افتراضات باطلة أو ادعاءات وحجج غير متصلة بالموضوع، أو تعميمات وأحكام متسرعة، أو ترك الأمور للزمن أو للحوادث كي تعالجها.</div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
+            <div style="background:rgba(255,107,107,0.07);border:1px solid rgba(255,107,107,0.2);border-radius:14px;padding:14px;">
+              <div style="color:var(--coral);font-weight:800;margin-bottom:8px;">[أ] التفكير الروتيني التقليدي يتسم بـ:</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="tag tag-coral">التحيز وعدم الموضوعية</span>
+                <span class="tag tag-coral">التكرار وعدم التجديد</span>
+                <span class="tag tag-coral">النمطية</span>
+                <span class="tag tag-coral">التصلب وعدم المرونة</span>
+              </div>
+            </div>
+            <div style="background:rgba(255,107,107,0.07);border:1px solid rgba(255,107,107,0.2);border-radius:14px;padding:14px;">
+              <div style="color:var(--coral);font-weight:800;margin-bottom:8px;">[ب] التفكير الانفعالي غير الفعال يتسم بـ:</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="tag tag-coral">البعد عن العقلانية</span>
+                <span class="tag tag-coral">عدم الثبات</span>
+                <span class="tag tag-coral">التسرع وعدم التأني</span>
+                <span class="tag tag-coral">السطحية</span>
+                <span class="tag tag-coral">البساطة وعدم التعقيد</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="color:var(--coral);font-weight:800;font-size:15px;margin:16px 0 12px;">أخطاء التفكير غير الفعال (7 أخطاء رئيسية):</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="error-card">
+              <div class="error-num">①</div>
+              <div class="error-title">التفكير بطريقة إما أسود أو أبيض (تفكير الكل أو لا شيء)</div>
+              <div class="error-desc">عدم الاعتراف بوجود خيارات وسطى أو ألوان رمادية في المواقف.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">②</div>
+              <div class="error-title">المبالغة في التعميم</div>
+              <div class="error-desc">إصدار أحكام عامة بناءً على حادثة فردية أو معلومة واحدة.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">③</div>
+              <div class="error-title">القفز إلى النتائج</div>
+              <div class="error-desc">الوصول إلى استنتاجات دون الاطلاع على الأدلة الكافية.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">④</div>
+              <div class="error-title">التهويل والتهوين</div>
+              <div class="error-desc">تضخيم الأمور أو تهوينها بما لا يتناسب مع حجمها الحقيقي.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">⑤</div>
+              <div class="error-title">التمركز حول الذات (الإفراط في الذاتية)</div>
+              <div class="error-desc">وضع الذات في مركز الأحداث وتفسيرها من منطلق شخصي بحت.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">⑥</div>
+              <div class="error-title">المقارنة الظالمة</div>
+              <div class="error-desc">مقارنة غير عادلة بين أمور غير متكافئة للتوصل إلى نتائج منحازة.</div>
+            </div>
+            <div class="error-card">
+              <div class="error-num">⑦</div>
+              <div class="error-title">التصفية أو التنقية</div>
+              <div class="error-desc">التركيز على الجانب السلبي فحسب وتجاهل الجوانب الإيجابية.</div>
+            </div>
+          </div>
+
+          <div style="color:white;font-weight:800;font-size:15px;margin:16px 0 12px;">صفات مستخدمي التفكير غير الفعال (8 صفات):</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-row"><div class="info-icon">🥊</div><div class="info-text">اللجوء إلى القوة والهجوم الشخصي أو الجماعي للقضاء على الأفكار والآراء المطروحة.</div></div>
+            <div class="info-row"><div class="info-icon">😰</div><div class="info-text">التردد في اتخاذ القرارات المناسبة في ضوء الأدلة المتوفرة.</div></div>
+            <div class="info-row"><div class="info-icon">🎭</div><div class="info-text">التضليل وإساءة استخدام الدعابة البريئة لتوجيه النقاش بعيداً عن الموضوع الرئيسي.</div></div>
+            <div class="info-row"><div class="info-icon">🌀</div><div class="info-text">إساءة استخدام اللغة قصداً أو بدونه للابتعاد عن صلب الموضوع.</div></div>
+            <div class="info-row"><div class="info-icon">⬛</div><div class="info-text">حسم المواقف بطريقة مزاجية أو بمنطق الأبيض والأسود فقط، رغم وجود خيارات عديدة.</div></div>
+            <div class="info-row"><div class="info-icon">❌</div><div class="info-text">طرح فرضيات مخالفة للواقع أو مغلوطة أو مبالغ فيها لرفض فكرة معينة.</div></div>
+            <div class="info-row"><div class="info-icon">🙈</div><div class="info-text">الاستهتار بالمشكلات المعقدة والنظر إليها نظرة بسيطة لا تتناسب مع صعوبتها.</div></div>
+            <div class="info-row"><div class="info-icon">📜</div><div class="info-text">الاعتماد على الأمثال والأقوال المعروفة في إصدار القرارات بصرف النظر عن خصوصية المشكلات.</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end gold-frame -->
+  </div><!-- end content section -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: TRUE/FALSE -->
+  <!-- ============================================================ -->
+  <div id="tf" class="section">
+    <div style="background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:24px;">
+      <div style="font-size:22px;font-weight:900;color:white;margin-bottom:6px;">✅ بنك أسئلة صح أو خطأ</div>
+      <div style="color:var(--text-muted);font-size:14px;margin-bottom:12px;">50 سؤالاً أكاديمياً — اضغط على الزر للكشف عن الإجابة وتوضيحها.</div>
+      <div class="progress-bar"><div class="progress-fill" id="tf-progress" style="width:0%"></div></div>
+      <div class="score-display">
+        <div><div class="score-label">الأسئلة المكشوفة</div><div class="score-num" id="tf-revealed">0</div></div>
+        <div><div class="score-label">من مجموع</div><div style="font-size:28px;font-weight:900;color:var(--sky);">50</div></div>
+      </div>
+    </div>
+
+    <div id="tf-container"></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: MCQ -->
+  <!-- ============================================================ -->
+  <div id="mcq" class="section">
+    <div style="background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:24px;">
+      <div style="font-size:22px;font-weight:900;color:white;margin-bottom:6px;">🎯 بنك أسئلة الاختيار من متعدد</div>
+      <div style="color:var(--text-muted);font-size:14px;margin-bottom:12px;">30 سؤالاً — اختر الإجابة الصحيحة ثم اكشف عن التوضيح.</div>
+      <div class="progress-bar"><div class="progress-fill" id="mcq-progress" style="width:0%"></div></div>
+      <div class="score-display">
+        <div><div class="score-label">إجابات صحيحة</div><div class="score-num" id="mcq-score">0</div></div>
+        <div><div class="score-label">من مجموع</div><div style="font-size:28px;font-weight:900;color:var(--sky);">30</div></div>
+      </div>
+    </div>
+
+    <div id="mcq-container"></div>
+  </div>
+
+</div><!-- container -->
+
+<div class="footer">🧠 مختبر التفكير النقدي · الفصل الثاني · أسسه وتنمية مهاراته</div>
+
+<script>
+// ===== NAV =====
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['content','tf','mcq'].indexOf(id);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+}
+
+// ===== ACCORDION =====
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  header.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// ===== TRUE/FALSE DATA (50 questions) =====
+const tfQuestions = [
+  // EASY (1-15)
+  { q: "التفكير عملية داخلية يمكن ملاحظتها مباشرةً دون الاستدلال عليها.", ans: false, ex: "خطأ — التفكير عملية داخلية لا يمكن ملاحظتها مباشرةً، بل يُستدل عليها من المظاهر السلوكية القابلة للقياس." },
+  { q: "التفكير وظيفة عقلية معرفية تتم في أرفع المستويات العقلية.", ans: true, ex: "صحيح — هذا هو التعريف الأساسي للتفكير كوظيفة عقلية معرفية عليا." },
+  { q: "تنشأ عن التفكير معرفة منسقة منتظمة.", ans: true, ex: "صحيح — التفكير يُفضي إلى معرفة منسقة ومنتظمة." },
+  { q: "التفكير نشاط لاإرادي يحدث بصورة تلقائية.", ans: false, ex: "خطأ — التفكير نشاط إرادي يصدر عن وعي وقصد." },
+  { q: "أدوات التفكير هي: الرموز والمفاهيم والمعاني والصور العقلية.", ans: true, ex: "صحيح — هذه هي الأدوات الأربعة للتفكير كما وردت في تعريفاته." },
+  { q: "التفكير يبدأ دائماً من فراغ تام.", ans: false, ex: "خطأ — التفكير لا يبدأ من فراغ، بل ينطلق من خلفية معرفية وخبرات سابقة." },
+  { q: "الهدف القريب للتفكير هو حل مشكلات الحاضر.", ans: true, ex: "صحيح — وهدفه البعيد تجنب تلك المشكلات مستقبلاً." },
+  { q: "التفكير مهارة فطرية لا يمكن تعليمها أو اكتسابها.", ans: false, ex: "خطأ — التفكير مهارة يمكن تعليمها وتطويرها من خلال التدريب والممارسة (الخاصية 11)." },
+  { q: "التفكير سلوك ارتقائي يزداد تعقيداً مع نمو الفرد.", ans: true, ex: "صحيح — هذه هي الخاصية الثانية عشرة للتفكير الإنساني." },
+  { q: "التفكير تصوري رمزي يستعيض عن الأشياء برموزها بدلاً من معالجتها فعلياً.", ans: true, ex: "صحيح — هذه الخاصية الثالثة للتفكير الإنساني." },
+  { q: "يمكن الاستدلال على التفكير من خلال السلوك الخارجي للفرد.", ans: true, ex: "صحيح — كما يُستدل على تفكير لاعب الشطرنج من نقلاته وتحريكه للقطع." },
+  { q: "التفكير للتكيف وظيفة تساعد الإنسان في حياته اليومية.", ans: true, ex: "صحيح — للتفكير وظيفة تكيّفية يستعين بها الإنسان في التوافق والتكيف." },
+  { q: "التفكير العلائقي يهتم بالعلاقة بين الموضوعات حتى الغائبة عن البيئة المادية.", ans: true, ex: "صحيح — التفكير العلائقي يهتم بالعلاقات حتى عندما لا يكون للموضوعات وجود مادي خارجي." },
+  { q: "التفكير ينتهي دائماً بحل ناجح للمشكلة المطروحة.", ans: false, ex: "خطأ — التفكير موجَّه نحو الحل لكنه لا يضمن دائماً نجاحه، كلاعب الشطرنج الذي يوجه تفكيره لكسب المباراة لكن ليس كل نقلاته ناجحة." },
+  { q: "التفكير يتأثر بمكونات الشخصية كالدوافع والانفعالات والقيم.", ans: true, ex: "صحيح — هذه الخاصية الثامنة؛ يتأثر التفكير بالدوافع والانفعالات والاتجاهات والقيم والميول والخبرات." },
+
+  // MEDIUM (16-35)
+  { q: "مستوى التفكير الأولي يشمل عمليات كالتحليل والتقييم والتركيب.", ans: false, ex: "خطأ — المستوى الأولي يشمل: الحفظ والفهم والتطبيق فقط. أما التحليل والتقييم فتندرج في عمليات التفكير العليا." },
+  { q: "التفكير الاستقرائي يسير من الخاص إلى العام.", ans: true, ex: "صحيح — الاستقراء يلاحظ الجزئيات بغرض إصدار تعميمات منها، أي من الخاص إلى العام." },
+  { q: "الاستنباط يُطبَّق مبدأه في: ما يصدق على الكل يصدق على الجزء.", ans: true, ex: "صحيح — هذا هو جوهر الاستنباط (Deduction) بالنص." },
+  { q: "التفكير النقدي نوع من أنواع التفكير الأولي البسيط.", ans: false, ex: "خطأ — التفكير النقدي نوع من أنواع التفكير العليا وليس الأولية." },
+  { q: "التفكير الإبداعي يتطلب ثلاثة عناصر: الحساسية للمشكلات، الطلاقة، والأصالة.", ans: true, ex: "صحيح — هذه هي الأمور الثلاثة الأساسية للتفكير الإبداعي بحسب المادة." },
+  { q: "التفكير ما وراء المعرفي يعني التفكير في موضوعات علمية متعددة.", ans: false, ex: "خطأ — التفكير ما وراء المعرفي يعني التفكير في التفكير ذاته (How we think)، لا في موضوعات علمية." },
+  { q: "الأسلوب الخرافي في التفكير يعتمد على الحقائق العلمية.", ans: false, ex: "خطأ — الأسلوب الخرافي يقوم على الوهم والخيال والأحلام، لا على الحقائق العلمية." },
+  { q: "الأسلوب العلمي في التفكير يستخدم لتفسير الظواهر المحددة والوصول إلى استنتاجات علمية.", ans: true, ex: "صحيح — الأسلوب العلمي يفسر الظواهر ويصل إلى استنتاجات مبنية على حقائق علمية." },
+  { q: "الأسلوب الفلسفي يستهدف فهم سر وجود الإنسان عبر منهج التأمل العقلي.", ans: true, ex: "صحيح — هذا هو الهدف الأسمى للأسلوب الفلسفي بنص المادة." },
+  { q: "التفكير غير الفعال يتبع منهجية واضحة ودقيقة.", ans: false, ex: "خطأ — التفكير غير الفعال لا يتبع منهجية واضحة أو دقيقة، ويقوم على مغالطات وافتراضات باطلة." },
+  { q: "التفكير الروتيني التقليدي يتسم بالمرونة والتجديد.", ans: false, ex: "خطأ — التفكير الروتيني التقليدي يتسم بالتصلب وعدم المرونة والتكرار وعدم التجديد." },
+  { q: "التفكير الانفعالي غير الفعال يتسم بالعقلانية والثبات.", ans: false, ex: "خطأ — التفكير الانفعالي غير الفعال يتسم بالبعد عن العقلانية وعدم الثبات والتسرع." },
+  { q: "القفز إلى النتائج خطأ من أخطاء التفكير غير الفعال.", ans: true, ex: "صحيح — القفز إلى النتائج من أبرز الأخطاء السبعة للتفكير غير الفعال." },
+  { q: "التهويل والتهوين من سمات التفكير النقدي السليم.", ans: false, ex: "خطأ — التهويل والتهوين من أخطاء التفكير غير الفعال، وهو عكس التفكير النقدي الذي يتسم بالدقة والموضوعية." },
+  { q: "المبالغة في التعميم من أخطاء التفكير غير الفعال.", ans: true, ex: "صحيح — المبالغة في التعميم الخطأ الثاني من الأخطاء السبعة للتفكير غير الفعال." },
+  { q: "التفكير النقدي يتسم بالموضوعية والعقلانية والمنطقية.", ans: true, ex: "صحيح — هذه من أبرز خصائص التفكير النقدي ومؤشرات فعاليته." },
+
+  // HARD (36-50)
+  { q: "التفكير النقدي يُصنَّف بوصفه تفكيراً 'اقترابياً' لأنه يهدف إلى الوصول إلى حلول صائبة.", ans: true, ex: "صحيح — التفكير النقدي اقترابي/ذكي لأنه يهدف إلى الوصول إلى حلول صائبة وصياغة حجج وبراهين." },
+  { q: "التفكير التأملي يتضمن عمليات: الاتجاه والتفسير والاختيار والاستبصار.", ans: true, ex: "صحيح — هذه هي العمليات الأربع المتضمنة في التفكير التأملي بنص المادة الدراسية." },
+  { q: "الأسلوب الديني في التفكير يُضعف إيمان الإنسان بقدرة الله.", ans: false, ex: "خطأ — الأسلوب الديني يزيد من إيمان الإنسان بالله، إذ يربط الظواهر الكونية بقدرته سبحانه." },
+  { q: "التمركز حول الذات (الإفراط في الذاتية) يندرج تحت أخطاء التفكير غير الفعال.", ans: true, ex: "صحيح — التمركز حول الذات الخطأ الخامس من أخطاء التفكير غير الفعال السبعة." },
+  { q: "في التصنيف متعدد الأبعاد، التفكير التقاربي يمثل الذكاء، والتفكير الافتراقي يمثل الإبداع.", ans: true, ex: "صحيح — هذا هو البُعد الثالث في التصنيف متعدد الأبعاد: تقاربية التفكير (الذكاء) مقابل افتراقيته (الإبداع)." },
+  { q: "مستخدمو التفكير غير الفعال يتميزون بالانفتاح على الأفكار الجديدة والاستماع للحجج.", ans: false, ex: "خطأ — مستخدمو التفكير غير الفعال يلجأون للقوة والهجوم الشخصي للقضاء على الأفكار المطروحة." },
+  { q: "التفكير الفعال يتطلب الالتزام بالموضوعية ومثابرة حل المشكلات.", ans: true, ex: "صحيح — الموضوعية والمثابرة من ضمن مهارات التفكير النقدي الفعال العشرة." },
+  { q: "تأجيل إصدار القرارات عند الافتقار للأدلة يعد خطأً في التفكير الفعال.", ans: false, ex: "خطأ — بالعكس، تأجيل إصدار القرارات عند الافتقار للأدلة الكافية من مهارات التفكير النقدي الفعال (المهارة العاشرة)." },
+  { q: "الاعتماد على الأمثال والأقوال لإصدار القرارات بصرف النظر عن خصوصية المشكلة من سمات التفكير غير الفعال.", ans: true, ex: "صحيح — هذه السمة الثامنة لمستخدمي التفكير غير الفعال." },
+  { q: "التفكير النقدي يتسم بالشمول والعمق والدقة والوضوح والثبات.", ans: true, ex: "صحيح — هذه جميعها من خصائص التفكير النقدي الثمانية (مؤشرات فعاليته)." },
+  { q: "التصفية أو التنقية كخطأ تفكيري تعني التركيز على الجانب السلبي وتجاهل الإيجابي.", ans: true, ex: "صحيح — التصفية/التنقية الخطأ السابع من أخطاء التفكير غير الفعال." },
+  { q: "للتفكير محددات ثلاثة هي: الزمن والموقف والموضوع.", ans: true, ex: "صحيح — هذه هي المحددات الثلاثة الموجّهة للتفكير وفق الخاصية السابعة." },
+  { q: "مساعدة التفكير على التحرر من قيود الزمان والمكان تعني أنه يعالج الأشياء البعيدة والغائبة رمزياً.", ans: true, ex: "صحيح — هذه الخاصية العاشرة للتفكير الإنساني." },
+  { q: "الطلاقة في التفكير الإبداعي تقتصر على الطلاقة اللفظية فقط.", ans: false, ex: "خطأ — الطلاقة تشمل: اللفظية والتعبيرية والفكرية معاً." },
+  { q: "التفكير الفلسفي يُنتهج بطريق الاقتران الحسي والتجريب المباشر فقط.", ans: false, ex: "خطأ — التفكير الفلسفي يُنتهج عبر منهج التأمل العقلي والتحليل المنطقي، لا التجريب المباشر." },
+  { q: "التفكير النقدي هو نمط سوي وفعال لأنه منطقي ويجنب الأفراد الوقوع في أخطاء التفكير.", ans: true, ex: "صحيح — هذا هو موضع التفكير النقدي في التصنيف: سوي وفعال لأنه يتفق وقواعد المنطق." },
+];
+
+// ===== MCQ DATA (30 questions) =====
+const mcqQuestions = [
+  { q: "وفقاً للمادة الدراسية، ما الذي يجعل تحديد التفكير تحديداً دقيقاً أمراً صعباً؟", opts: ["تعدد أنواع التفكير", "كونه عملية داخلية غير مباشرة يُستدل عليها من السلوك", "ارتباطه بالوظائف الفسيولوجية للدماغ", "غياب التعريفات العلمية المتفق عليها"], ans: 1, ex: "الإجابة (ب) — التفكير عملية داخلية لا يمكن ملاحظتها مباشرةً، بل يُستدل عليها من المظاهر السلوكية، وهذا ما يجعل تحديده الدقيق أمراً عسيراً." },
+  { q: "مَن من التالي نستدل على تفكيره من خلال سلوكه الخارجي وفق المثال الوارد في المادة؟", opts: ["الكاتب أثناء التأمل", "لاعب الشطرنج من خلال نقلاته", "الشخص النائم", "الطالب المذاكر بصمت"], ans: 1, ex: "الإجابة (ب) — المادة مثّلت بلاعب الشطرنج الذي يُستدل على تفكيره من خلال نقلاته وتحريكه لقطع الشطرنج." },
+  { q: "أي من التالي ليس من محاور تعريفات التفكير الواردة في المادة؟", opts: ["التفكير فعل عقلي واعٍ وراقٍ", "التفكير نشاط إرادي", "التفكير ينشأ من فراغ تام", "أدوات التفكير هي الرموز والمفاهيم والمعاني"], ans: 2, ex: "الإجابة (ج) — 'التفكير ينشأ من فراغ تام' هو النقيض للمحور الثالث الذي يؤكد أن التفكير 'لا يبدأ من فراغ'." },
+  { q: "ما الخاصية التي تجعل التفكير قادراً على التعامل مع الأشياء الغائبة والبعيدة؟", opts: ["التفكير العلائقي", "التحرر من قيود الزمان والمكان", "الوظيفة التكيّفية", "التفكير الموجَّه والهادف"], ans: 1, ex: "الإجابة (ب) — الخاصية العاشرة: يساعد التفكير على التحرر من قيود الزمان والمكان ومعالجة الأشياء البعيدة والغائبة رمزياً." },
+  { q: "أي من التالي يُمثّل عمليات التفكير الأولية (المستوى الأدنى)؟", opts: ["التحليل والتقييم والتركيب", "الحفظ والفهم والتطبيق", "الاستدلال والنقد والإبداع", "التأمل والاستبصار والاختيار"], ans: 1, ex: "الإجابة (ب) — عمليات التفكير الأولية هي: الحفظ والفهم والتطبيق، وهي المهارات الأساسية غير المعقدة." },
+  { q: "ما الفرق الجوهري بين الاستنباط والاستقراء؟", opts: ["الاستنباط من الخاص للعام، والاستقراء من العام للخاص", "الاستنباط من العام للخاص، والاستقراء من الخاص للعام", "كلاهما متماثلان في الاتجاه", "الاستنباط يعتمد الملاحظة والاستقراء يعتمد المنطق"], ans: 1, ex: "الإجابة (ب) — الاستنباط: ما يصدق على الكل يصدق على الجزء (عام→خاص). الاستقراء: نلاحظ الجزئيات للوصول إلى تعميمات (خاص→عام)." },
+  { q: "أي خصائص التفكير النقدي التالية جاءت في المادة الدراسية؟", opts: ["الانفعالية والحدسية والخيال", "العقلانية والمنطقية والثبات والعمق والموضوعية والشمول والدقة والقبول", "الإبداعية والأصالة والطلاقة", "التجريد والتصنيف والمقارنة"], ans: 1, ex: "الإجابة (ب) — خصائص التفكير النقدي الثماني هي: العقلانية، المنطقية، الثبات، العمق، الموضوعية، الشمول، الدقة والوضوح، القبول والاقتناع." },
+  { q: "ما السمة الأساسية للأسلوب الخرافي في التفكير؟", opts: ["يعتمد على العقل والتحليل المنطقي", "يُحيل الظواهر إلى غضب الآلهة والسحر ويقوم على الوهم والخيال", "يربط بين الظواهر وقدرة الله", "يهدف إلى فهم وجود الإنسان فلسفياً"], ans: 1, ex: "الإجابة (ب) — الأسلوب الخرافي يتسم بالسذاجة وغير المنطقية، ويُحيل الظواهر إلى غضب الآلهة أو السحر، ويقوم على الأوهام وأحلام اليقظة." },
+  { q: "ما شرطا التفكير الفعال وفق المادة الدراسية؟", opts: ["السرعة في الحكم والاعتماد على الحدس", "أفضل المعلومات دقةً وكفايةً وصلةً، مع اتباع منهجية علمية سليمة", "الخبرة الواسعة والذكاء العالي", "الاتزان الانفعالي والإدراك الاجتماعي"], ans: 1, ex: "الإجابة (ب) — شرطا التفكير الفعال: (1) استخدام أفضل المعلومات من حيث دقتها وكفايتها وعلاقتها بالموضوع، (2) اتباع منهجية علمية سليمة." },
+  { q: "مَن من التالي هو نموذج لمستخدم التفكير غير الفعال؟", opts: ["من يبحث عن بدائل ويفحصها باهتمام", "من يلجأ للهجوم الشخصي للقضاء على الأفكار المطروحة", "من يؤجل قراره حتى تكتمل الأدلة", "من ينفتح على الآراء الجديدة"], ans: 1, ex: "الإجابة (ب) — اللجوء للقوة والهجوم الشخصي للقضاء على الأفكار هو السمة الأولى لمستخدمي التفكير غير الفعال." },
+  { q: "التفكير 'ما وراء المعرفي' يرتبط بالعمليات التنفيذية التي تشمل:", opts: ["الحفظ والاسترجاع والتذكر", "التخطيط والمراقبة والتوجيه والتقييم والحكم", "الاستنباط والاستقراء والتحليل", "الطلاقة والأصالة والحساسية"], ans: 1, ex: "الإجابة (ب) — التفكير ما وراء المعرفي يرتبط بالعمليات التنفيذية: التخطيط، المراقبة، التوجيه، التقييم، والحكم." },
+  { q: "أي من التالي يُعد من المحددات الموجِّهة للتفكير (الخاصية السابعة)؟", opts: ["الزمن والموقف والموضوع", "الدوافع والقيم والميول", "التذكر والفهم والإدراك", "الاستنباط والاستقراء والتحليل"], ans: 0, ex: "الإجابة (أ) — محددات التفكير الثلاثة هي: الزمن، الموقف، الموضوع. أما الدوافع والقيم فهي مكونات الشخصية المؤثرة فيه (الخاصية الثامنة)." },
+  { q: "الخطأ التفكيري الذي يتمثل في التركيز على السلبيات وتجاهل الإيجابيات يُسمى:", opts: ["القفز إلى النتائج", "التصفية أو التنقية", "المقارنة الظالمة", "التمركز حول الذات"], ans: 1, ex: "الإجابة (ب) — التصفية أو التنقية تعني التركيز على الجانب السلبي وتجاهل الجوانب الإيجابية." },
+  { q: "أي من الآتي يصف التفكير التأملي بشكل دقيق؟", opts: ["التفكير في التفكير ذاته لتحليله وكشف أخطائه", "النشاط العقلي عند مواجهة الموقف المشكل مع إعادة تجميع الخبرات في نمط جديد", "الوصول إلى نتيجة من مقدمات معينة باستخدام الاستنباط", "إنتاج شيء جديد بدرجة عالية من الأصالة"], ans: 1, ex: "الإجابة (ب) — التفكير التأملي: النشاط العقلي عند مواجهة الموقف المشكل، مع اختيار الخبرات الملائمة وإعادة تجميعها في نمط جديد." },
+  { q: "في التصنيف متعدد الأبعاد للتفكير، أي الأبعاد الثلاثة التالية هو الصحيح؟", opts: ["بُعد اللون، بُعد الصوت، بُعد الحركة", "بُعد البساطة/التعقيد، بُعد السواء/عدم السواء، بُعد التقاربية/الافتراقية", "بُعد الزمن، بُعد المكان، بُعد الحادثة", "بُعد الحفظ، بُعد الفهم، بُعد التطبيق"], ans: 1, ex: "الإجابة (ب) — الأبعاد الثلاثة: (1) بساطة التفكير مقابل تعقيده، (2) السواء مقابل عدم السواء، (3) تقاربية التفكير (الذكاء) مقابل افتراقيته (الإبداع)." },
+  { q: "ما العملية العقلية التي يعتمد عليها التفكير باعتباره عملية عقلية عليا (الخاصية الخامسة)؟", opts: ["الاستدلال والاستنباط فقط", "التذكر والفهم والإدراك", "الانفعال والدافعية", "الحفظ والتكرار"], ans: 1, ex: "الإجابة (ب) — التفكير كعملية عقلية عليا يعتمد على: التذكر والفهم والإدراك." },
+  { q: "أي من الآتي ليس من مهارات التفكير النقدي الفعال الواردة في المادة؟", opts: ["تحديد المشكلة بدقة ووضوح", "اتخاذ القرارات في ضوء الرغبات الشخصية والعواطف", "الانفتاح على الأفكار والآراء الجديدة", "التشكيك في المعلومات للوصول إلى أفضلها"], ans: 1, ex: "الإجابة (ب) — اتخاذ القرارات في ضوء الرغبات والعواطف نقيض للتفكير النقدي، إذ تنص المادة على اتخاذها في ضوء الأهداف الموضوعة لا الرغبات والعواطف." },
+  { q: "التفكير الانفعالي غير الفعال تحكمه أساساً:", opts: ["القواعد المنطقية والأدلة الموضوعية", "أهواء الفرد ورغباته وميوله واتجاهاته", "المعلومات الموثوقة والمصادر الأكاديمية", "التصنيف العلمي والمنهجية الدقيقة"], ans: 1, ex: "الإجابة (ب) — التفكير الانفعالي يقوم أساساً على الأهواء الشخصية للفرد، حيث تلعب رغباته وميوله واتجاهاته دوراً بارزاً في توجيهه." },
+  { q: "أيٌّ من الخصائص التالية لا تنتمي لخصائص التفكير الإنساني الاثنتي عشرة؟", opts: ["التفكير مهارة يمكن تعلمها", "التفكير سلوك ارتقائي", "التفكير عملية فسيولوجية بيولوجية مباشرة قابلة للقياس", "التفكير تصوري رمزي"], ans: 2, ex: "الإجابة (ج) — 'التفكير عملية فسيولوجية مباشرة قابلة للقياس' ليست من الخصائص الاثنتي عشرة، بل على النقيض — التفكير لا يمكن ملاحظته مباشرة." },
+  { q: "أيٌّ من مكونات الشخصية التالية ذُكر في المادة بوصفه مؤثراً في التفكير؟", opts: ["المظهر الجسدي والطول والوزن", "الدوافع والانفعالات والاتجاهات والقيم والميول والخبرات", "الذكاء المنطقي الرياضي فقط", "اللغة الأم والبيئة الجغرافية"], ans: 1, ex: "الإجابة (ب) — الخاصية الثامنة: يتأثر التفكير بمكونات الشخصية: الدوافع، الانفعالات، الاتجاهات، القيم، الميول، الخبرات." },
+  { q: "ما موضع التفكير النقدي في تصنيف أنماط التفكير (البعدين)؟", opts: ["بسيط، غير سوي، افتراقي", "مركب، سوي وفعال، اقترابي (ذكي)", "بسيط، سوي، اقترابي", "مركب، غير فعال، افتراقي"], ans: 1, ex: "الإجابة (ب) — التفكير النقدي: مركب (يعتمد قدرات متعددة)، سوي وفعال (منطقي)، اقترابي/ذكي (يهدف للحلول الصائبة)." },
+  { q: "الهدف الأسمى للأسلوب الفلسفي في التفكير هو:", opts: ["تفسير الظواهر الطبيعية تجريبياً", "ربط الظواهر بقدرة الله تعالى", "فهم سر وجود الإنسان ومكانته عبر التأمل العقلي والتحليل المنطقي", "إحالة الظواهر إلى عوامل خرافية"], ans: 2, ex: "الإجابة (ج) — الأسلوب الفلسفي يستهدف فهم سر وجود الإنسان ومكانته في الكون عبر التأمل العقلي والتحليل المنطقي." },
+  { q: "أيٌّ من التالي يُعبّر عن خطأ 'المقارنة الظالمة' في التفكير غير الفعال؟", opts: ["تضخيم حجم المشكلة أكثر من واقعها", "مقارنة غير عادلة بين أمور غير متكافئة للتوصل إلى نتائج منحازة", "التركيز على السلبيات وتجاهل الإيجابيات", "إصدار حكم عام من حادثة واحدة"], ans: 1, ex: "الإجابة (ب) — المقارنة الظالمة تعني مقارنة أمور غير متكافئة بطريقة منحازة. أما (أ) فهو التهويل، و(ج) التصفية، و(د) المبالغة في التعميم." },
+  { q: "استخدام الشخص لإساءة اللغة قصداً أو بدونه للابتعاد عن صلب الموضوع هو:", opts: ["من مهارات التفكير النقدي", "من سمات مستخدمي التفكير غير الفعال", "من أساليب الحوار العلمي المنتج", "من متطلبات التفكير الفلسفي"], ans: 1, ex: "الإجابة (ب) — إساءة استخدام اللغة للابتعاد عن صلب الموضوع هي السمة الرابعة لمستخدمي التفكير غير الفعال." },
+  { q: "أيٌّ من التالي من أنواع التفكير العليا الخمسة الواردة في المادة؟", opts: ["التفكير الاستنتاجي والتفكير الآلي", "التفكير الاستدلالي والتفكير النقدي والتفكير الإبداعي وما وراء المعرفي والتأملي", "التفكير الحسابي والتفكير اللغوي", "التفكير الديني والتفكير الفلسفي والتفكير الخرافي"], ans: 1, ex: "الإجابة (ب) — الأنواع الخمسة للتفكير العليا: الاستدلالي، النقدي، الإبداعي، ما وراء المعرفي، التأملي." },
+  { q: "التصفية في التفكير غير الفعال تختلف عن التهوين في أن:", opts: ["التصفية تهوّن الأشياء، والتهوين يُصغّرها", "التصفية تركز على السلبيات وتتجاهل الإيجابيات، والتهوين يُصغّر الأشياء الكبيرة عن حجمها الحقيقي", "كلاهما متماثلان ولا فرق بينهما", "التصفية إيجابية والتهوين سلبي"], ans: 1, ex: "الإجابة (ب) — التصفية: التركيز على السلبيات فقط. التهوين: تصغير حجم الأشياء وإنقاص أهميتها عن حجمها الحقيقي." },
+  { q: "أيٌّ مما يلي يُعد من الأهداف البعيدة للتفكير؟", opts: ["حل المشكلة الحاضرة الآنية", "تجنب المشكلات المستقبلية", "التكيف الفوري مع الضغوط", "إصدار الأحكام السريعة"], ans: 1, ex: "الإجابة (ب) — وفق المادة: الهدف القريب للتفكير هو حل مشكلات الحاضر، وهدفه البعيد هو تجنب تلك المشكلات مستقبلاً." },
+  { q: "ما الذي يُميّز الأسلوب الديني في التفكير عن الأسلوب الخرافي؟", opts: ["كلاهما يعتمد على الوهم والخيال", "الأسلوب الديني يرتبط بإيمان حقيقي بقدرة الله ويزيد من الإيمان، بينما الخرافي يقوم على الأوهام والسحر", "الأسلوب الخرافي أكثر عقلانية من الديني", "لا فرق بينهما في النتائج العملية"], ans: 1, ex: "الإجابة (ب) — الأسلوب الديني يربط الظواهر بقدرة الله ويزيد الإيمان، أما الخرافي فيقوم على الأوهام وإحالة الظواهر للسحر وغضب الآلهة." },
+  { q: "طرح فرضيات مغلوطة أو مبالغ فيها لرفض فكرة معينة هو:", opts: ["مهارة نقدية متقدمة", "سمة من سمات مستخدمي التفكير غير الفعال", "من خصائص التفكير الإبداعي", "من أدوات الاستدلال المنطقي"], ans: 1, ex: "الإجابة (ب) — طرح فرضيات مغلوطة أو مبالغ فيها لرفض الأفكار هو السمة السادسة لمستخدمي التفكير غير الفعال." },
+  { q: "ما عدد خصائص التفكير الإنساني الواردة في المادة الدراسية؟", opts: ["8 خصائص", "10 خصائص", "12 خصائص", "6 خصائص"], ans: 2, ex: "الإجابة (ج) — المادة تذكر 12 خاصية للتفكير الإنساني، من التفكير الداخلي الذاتي (1) وحتى التفكير كسلوك ارتقائي (12)." },
+];
+
+// ===== RENDER TF =====
+let tfRevealed = 0;
+function renderTF() {
+  const container = document.getElementById('tf-container');
+  tfQuestions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.innerHTML = `
+      <div class="q-num">السؤال ${i+1} من 50 · مستوى: ${i<15?'سهل':i<35?'متوسط':'صعب'}</div>
+      <div class="q-text">${q.q}</div>
+      <button class="reveal-btn" onclick="revealTF(${i}, this)">🎭 اكشف الستار عن الإجابة</button>
+      <div class="answer-box ${q.ans?'correct':'incorrect'}" id="tf-ans-${i}">
+        <div class="answer-label ${q.ans?'c':'x'}">${q.ans?'✅ صحيح':'❌ خطأ'}</div>
+        <div class="answer-explain">${q.ex}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function revealTF(i, btn) {
+  const box = document.getElementById(`tf-ans-${i}`);
+  if (!box.classList.contains('show')) {
+    box.classList.add('show');
+    btn.style.display = 'none';
+    tfRevealed++;
+    document.getElementById('tf-revealed').textContent = tfRevealed;
+    document.getElementById('tf-progress').style.width = (tfRevealed/50*100)+'%';
+  }
+}
+
+// ===== RENDER MCQ =====
+let mcqScore = 0;
+function renderMCQ() {
+  const container = document.getElementById('mcq-container');
+  mcqQuestions.forEach((q, qi) => {
+    const letters = ['أ','ب','ج','د'];
+    let optsHtml = q.opts.map((o, oi) => `
+      <button class="mcq-opt" onclick="selectMCQ(${qi},${oi},this)">
+        <span class="opt-letter">${letters[oi]}</span>${o}
+      </button>
+    `).join('');
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.innerHTML = `
+      <div class="q-num">السؤال ${qi+1} من 30</div>
+      <div class="q-text">${q.q}</div>
+      <div class="mcq-options" id="mcq-opts-${qi}">${optsHtml}</div>
+      <div class="answer-box correct" id="mcq-ans-${qi}">
+        <div class="answer-label c">✅ الإجابة الصحيحة: ${letters[q.ans]}</div>
+        <div class="answer-explain">${q.ex}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectMCQ(qi, oi, btn) {
+  const q = mcqQuestions[qi];
+  const opts = document.querySelectorAll(`#mcq-opts-${qi} .mcq-opt`);
+  opts.forEach(o => { o.style.pointerEvents = 'none'; });
+  opts[q.ans].classList.add('show-correct');
+  if (oi === q.ans) {
+    btn.classList.add('selected-correct');
+    mcqScore++;
+    document.getElementById('mcq-score').textContent = mcqScore;
+  } else {
+    btn.classList.add('selected-wrong');
+  }
+  const ans = document.getElementById(`mcq-ans-${qi}`);
+  ans.classList.add('show');
+  const revealed = document.querySelectorAll('.mcq-opts .show-correct').length;
+  document.getElementById('mcq-progress').style.width = (mcqScore/30*100)+'%';
+}
+
+// ===== INIT =====
+renderTF();
+renderMCQ();
+</script>
+</body>
+</html>
